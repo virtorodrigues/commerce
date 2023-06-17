@@ -1,0 +1,116 @@
+import { Header } from '@/components/Header'
+import { getProduct } from '@/utils/getStripeProducts'
+import Image from 'next/image'
+import mlPayment from '../../../assets/payment-methods/ml-payment.svg'
+import eloPayment from '../../../assets/payment-methods/elo-payment.svg'
+import hipercardPayment from '../../../assets/payment-methods/hipercard-payment.svg'
+import mastercardPayment from '../../../assets/payment-methods/mastercard-payment.svg'
+import visaPayment from '../../../assets/payment-methods/visa-payment.svg'
+import boletoPayment from '../../../assets/payment-methods/boleto-payment.svg'
+
+export default async function ProductDetails({
+  params: { productId },
+}: {
+  params: { productId: string[] }
+}) {
+  const product = await getProduct({ id: productId[0] })
+
+  function getHrefToBuyProduct() {
+    const href = `https://api.whatsapp.com/send?phone=5518988020195&text=Olá Marcelo, gostaria de saber mais informações sobre um produto!%0A%0A
+    - Controle de código: ${product.id} %0A
+    - Condição: ${product.condition}%0A
+    - Valor: ${product.price}%0A%0A
+    - Título: ${product.name}%0A
+    - Descrição: ${product.description}%0A
+      `
+    return href
+  }
+
+  return (
+    <>
+      <Header />
+      <div className="mx-auto my-0 mt-36 flex w-[1200px] flex-row justify-between gap-10 bg-white p-10">
+        <div className="flex flex-col">
+          <div className="flex flex-row border-b border-gray-200">
+            <div className="py-5 pr-10">
+              <Image width={300} height={200} src={product.image} alt="" />
+            </div>
+            <div className="flex max-w-sm flex-col py-5">
+              <span className="mb-2 text-sm text-gray-700 first-letter:uppercase">
+                {product.condition}
+              </span>
+              <strong className="mb-3 text-xl">{product.name}</strong>
+              <span className="text-3xl ">R$ {product.price}</span>
+              <div>
+                <span className="text-sm">em </span>
+                <span className="text-sm font-bold text-green-500">
+                  12x R${Math.floor(product.price / 12)}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="">
+            <span className="mb-3 mt-10 block text-xl">Descrição</span>
+            <p className="text-md leading-7 text-gray-600">
+              {product.description}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-5">
+          <div className="flex h-fit w-72 min-w-[288px] flex-col gap-4 rounded-lg border border-gray-200 p-5">
+            <strong>Último disponível!</strong>
+            <div className="flex flex-col gap-2">
+              <a
+                href={getHrefToBuyProduct()}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-md bg-green-500 py-3 text-center text-white duration-150 hover:opacity-90"
+              >
+                Comprar agora
+              </a>
+              {/* <button className="rounded-md bg-green-500/20 py-3 text-green-500 duration-150 hover:opacity-90">
+                Adicionar ao carrinho
+              </button> */}
+            </div>
+            <span className="text-xs text-gray-500">
+              <span className="font-bold text-green-500">
+                Devolução grátis.
+              </span>{' '}
+              Você tem 7 dias a partir da data de recebimento.
+            </span>
+            <span className="text-xs text-gray-500">
+              <span className="font-bold text-green-500">
+                Entregas em mãos imediata.
+              </span>{' '}
+              Se você é da região de Presidente Prudente, podemos agendar um
+              horário para você ir até minha casa retirar seu produto.
+            </span>
+          </div>
+          <div className="flex h-fit w-72 min-w-[288px] flex-col gap-4 rounded-lg border border-gray-200 p-5">
+            <strong>Meios de pagamento</strong>
+            <div>
+              <span className="text-sm">Até 12x sem cartão de crédito</span>
+              <Image width={73} height={32} src={mlPayment} alt="" />
+            </div>
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col">
+                <span className="text-sm">Cartões de crédito</span>
+                <span className="text-xs text-gray-400">Page em até 12x!</span>
+              </div>
+              <div className="flex flex-row justify-between">
+                <Image width={31} height={32} src={mastercardPayment} alt="" />
+                <Image width={42} height={32} src={visaPayment} alt="" />
+                <Image width={37} height={32} src={eloPayment} alt="" />
+                <Image width={53} height={32} src={hipercardPayment} alt="" />
+              </div>
+            </div>
+            <div>
+              <span className="text-sm">Boleto bancário</span>
+              <Image width={28} height={32} src={boletoPayment} alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
