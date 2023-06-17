@@ -7,7 +7,7 @@ interface Product {
   name: string
   price: number
   description?: string
-  condition?: string
+  condition: string
 }
 
 type ResponseType = {
@@ -44,7 +44,7 @@ async function getData({ response }: ResponseType) {
         product.default_price as string,
       )) as any
 
-      console.log(product.statement_descriptor)
+      const condition = product.metadata?.condition || ''
 
       return {
         id: product.id,
@@ -52,7 +52,7 @@ async function getData({ response }: ResponseType) {
         name: product.name,
         price: price.unit_amount / 100,
         description: product.description || '',
-        condition: product.statement_descriptor || '',
+        condition,
       }
     })
 
