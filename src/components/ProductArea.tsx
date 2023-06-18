@@ -5,7 +5,6 @@ import { getListOfProducts } from '@/utils/getStripeProducts'
 
 export async function ProductArea({ searchParams }: { searchParams: {} }) {
   const products = await getListOfProducts({ searchParams })
-
   return (
     <>
       <Filter searchParams={searchParams} />

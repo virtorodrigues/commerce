@@ -2,7 +2,19 @@ import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
 import { ProductArea } from '@/components/ProductArea'
 
-export default function Home({ searchParams }: { searchParams: {} }) {
+export const runtime = 'edge'
+
+export const metadata = {
+  title: 'Lista de produtos',
+  description: 'Encontre o controle ideal para você aqui.',
+}
+
+export default function Home({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined }
+}) {
+
   return (
     <div className="flex flex-col items-center pb-12">
       <Header />
@@ -11,8 +23,17 @@ export default function Home({ searchParams }: { searchParams: {} }) {
         {/* @ts-expect-error Async Component */}
         <ProductArea searchParams={searchParams} />
       </div>
-      <div>{Object.keys(searchParams)}</div>
-      <div>{Object.values(searchParams)}</div>
     </div>
   )
+}
+
+export async function getServerSideProps() {
+  // Faça sua lógica de busca de dados aqui
+  const currentUrl = 'https://www.example.com' // Exemplo de URL estática
+  console.log('dasdas')
+  return {
+    props: {
+      currentUrl,
+    },
+  }
 }
