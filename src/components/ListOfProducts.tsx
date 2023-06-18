@@ -28,7 +28,7 @@ export async function ListOfProducts({
           <Link href={`/product/${product.id}`}>
             <div className="border-b-2 border-b-[#EBEBEB] p-2 md:p-7">
               <Image
-                className="max-h-40 w-96 object-contain"
+                className="h-40 w-96 object-contain"
                 width={200}
                 height={400}
                 src={product.image}

@@ -8,8 +8,8 @@ export function SkeletonLayout() {
           key={index}
           className="animate-pulse cursor-pointer rounded-lg border bg-white duration-100 hover:shadow-2xl"
         >
-          <div className="border-b-2 border-b-[#EBEBEB] p-2 md:p-7">
-            <div className="h-40 w-full rounded-md bg-gray-300 "></div>
+          <div className="border-b-2 border-b-[#EBEBEB] px-5 py-8 md:p-7">
+            <div className="h-32 w-full rounded-md bg-gray-300 md:h-40 "></div>
           </div>
           <div className="flex flex-col gap-5 p-4 md:p-5">
             <div className="flex flex-col gap-1">
