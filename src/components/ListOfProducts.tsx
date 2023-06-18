@@ -11,8 +11,12 @@ interface Product {
   condition: string
 }
 
-export async function ListOfProducts() {
-  const products = await getListOfProducts({})
+export async function ListOfProducts({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined }
+}) {
+  const products = await getListOfProducts({ searchParams })
 
   return (
     <ul className="auto-rows grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-5">

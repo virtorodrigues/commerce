@@ -14,7 +14,7 @@ export async function ProductArea({
       <Filter searchParams={searchParams} />
       <Suspense fallback={<div>Carregando...</div>}>
         {/* @ts-expect-error Async Component */}
-        <ListOfProducts />
+        <ListOfProducts searchParams={searchParams} />
       </Suspense>
     </>
   )
