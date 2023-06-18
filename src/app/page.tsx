@@ -8,6 +8,7 @@ export default function Home({ searchParams }: { searchParams: {} }) {
       <Header />
       <Hero />
       <div className="mt-10 flex w-full flex-row gap-8 md:mt-16 md:w-[1200px]">
+        {/* @ts-expect-error Async Component */}
         <ProductArea searchParams={searchParams} />
       </div>
     </div>

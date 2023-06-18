@@ -10,6 +10,7 @@ export async function ProductArea({ searchParams }: { searchParams: {} }) {
     <>
       <Filter searchParams={searchParams} />
       <Suspense fallback={<div>Carregando...</div>}>
+        {/* @ts-expect-error Async Component */}
         <ListOfProducts products={products} />
       </Suspense>
     </>
