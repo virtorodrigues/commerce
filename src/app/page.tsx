@@ -11,6 +11,8 @@ export default function Home({ searchParams }: { searchParams: {} }) {
         {/* @ts-expect-error Async Component */}
         <ProductArea searchParams={searchParams} />
       </div>
+      <div>{Object.keys(searchParams)}</div>
+      <div>{Object.values(searchParams)}</div>
     </div>
   )
 }
