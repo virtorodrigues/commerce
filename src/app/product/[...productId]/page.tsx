@@ -7,6 +7,7 @@ import hipercardPayment from '../../../assets/payment-methods/hipercard-payment.
 import mastercardPayment from '../../../assets/payment-methods/mastercard-payment.svg'
 import visaPayment from '../../../assets/payment-methods/visa-payment.svg'
 import boletoPayment from '../../../assets/payment-methods/boleto-payment.svg'
+import arrowLeftIcon from '../../../assets/arrow-left.svg'
 import Link from 'next/link'
 
 interface Product {
@@ -71,12 +72,18 @@ export default async function ProductDetails({
   return (
     <>
       <Header />
-      <Link
-        href={'/'}
-        className="text-md mx-auto mb-5 mt-36 flex w-full text-gray-400 md:w-[1200px] md:flex-row"
-      >
-        Voltar
-      </Link>
+      <div className="mx-auto mb-5 mt-28 flex w-full items-center pl-3 text-sm text-gray-500 md:w-[1200px] md:flex-row md:pl-0">
+        <Link href={'/'} className="flex gap-1">
+          <Image
+            className="text-gray-500"
+            src={arrowLeftIcon}
+            width={15}
+            height={15}
+            alt=""
+          />
+          Voltar
+        </Link>
+      </div>
       <div className="mx-auto my-0 flex w-full flex-col justify-between gap-10 bg-white p-5 md:w-[1200px] md:flex-row md:p-10">
         <div className="flex flex-col">
           <div className="flex flex-col border-b border-gray-200 pb-5 md:flex-row">
