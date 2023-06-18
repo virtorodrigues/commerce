@@ -3,7 +3,7 @@ import { Filter } from './Filter'
 import { ListOfProducts } from './ListOfProducts'
 import { getListOfProducts } from '@/utils/getStripeProducts'
 
-export const runtime = 'edge'
+// export const runtime = 'edge'
 
 export async function ProductArea({
   searchParams,
