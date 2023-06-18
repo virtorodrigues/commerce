@@ -3,7 +3,11 @@ import { Filter } from './Filter'
 import { ListOfProducts } from './ListOfProducts'
 import { getListOfProducts } from '@/utils/getStripeProducts'
 
-export async function ProductArea({ searchParams }: { searchParams: {} }) {
+export async function ProductArea({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined }
+}) {
   const products = await getListOfProducts({ searchParams })
   return (
     <>

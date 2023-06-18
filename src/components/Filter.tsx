@@ -1,9 +1,13 @@
 import Link from 'next/link'
 
-export function Filter({ searchParams }: { searchParams: {} }) {
+export function Filter({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined }
+}) {
   return (
     <div className="hidden min-w-fit flex-col md:block ">
-      {Object.entries(searchParams).length > 0 && (
+      {searchParams && Object.entries(searchParams).length > 0 && (
         <Link href="/">Limpar filtro</Link>
       )}
       <div className="flex flex-col">

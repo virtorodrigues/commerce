@@ -25,19 +25,19 @@ export async function getProduct({ id }: { id: string }) {
 export async function getListOfProducts({
   searchParams,
 }: {
-  searchParams: {}
+  searchParams?: { [key: string]: string | string[] | undefined }
 }): Promise<Product[]> {
-  const fiterType = Object.keys(searchParams)
-  const fiterValues = Object.values(searchParams)
+  const fiterType = searchParams && Object.keys(searchParams)
+  const fiterValues = searchParams && Object.values(searchParams)
 
   const response = await stripe.products.list()
 
   const listOfProducts = getData({ response })
 
   let listFiltred = (await listOfProducts) as Product[]
-  if (fiterType.length) {
+  if (fiterType?.length) {
     listFiltred = listFiltred.filter(
-      (product) => product.condition === fiterValues[0],
+      (product) => fiterValues && product.condition === fiterValues[0],
     )
   }
 
