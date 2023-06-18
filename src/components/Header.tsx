@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import logo from '../assets/logo.svg'
+import Link from 'next/link'
 
 export function Header() {
   return (
@@ -12,18 +13,21 @@ export function Header() {
           placeholder="Digite o que você quer encontrar"
         />
         <nav className="flex gap-5 text-white">
-          <a href="/" className="cursor-pointer duration-200 hover:opacity-90">
+          <Link
+            href="/"
+            className="cursor-pointer duration-200 hover:opacity-90"
+          >
             Ver produtos
-          </a>
-          <a
+          </Link>
+          <Link
             href="/contacts"
             className="cursor-pointer duration-200 hover:opacity-90"
           >
             Contato
-          </a>
-          {/* <a className="cursor-pointer duration-200 hover:opacity-90">
+          </Link>
+          {/* <Link className="cursor-pointer duration-200 hover:opacity-90">
             Meu carrinho
-          </a> */}
+          </Link> */}
         </nav>
       </div>
     </div>

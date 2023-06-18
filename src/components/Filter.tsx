@@ -1,6 +1,11 @@
-export function Filter() {
+import Link from 'next/link'
+
+export function Filter({ searchParams }: { searchParams: {} }) {
   return (
     <div className="hidden min-w-fit flex-col md:block ">
+      {Object.entries(searchParams).length > 0 && (
+        <Link href="/">Limpar filtro</Link>
+      )}
       <div className="flex flex-col">
         <strong className="text-2xl font-normal text-gray-700">
           Controle xbox 360
@@ -9,8 +14,18 @@ export function Filter() {
       </div>
       <div className="flex flex-col gap-2 pt-5">
         <strong className="text-lg font-normal">Condição</strong>
-        <span className="cursor-pointer text-xs text-gray-700">Novo</span>
-        <span className="cursor-pointer text-xs text-gray-700">Usado</span>
+        <Link
+          href="/api/filter?condition=novo"
+          className="cursor-pointer text-xs text-gray-700"
+        >
+          Novo
+        </Link>
+        <Link
+          href="/api/filter?condition=usado"
+          className="cursor-pointer text-xs text-gray-700"
+        >
+          Usado
+        </Link>
         <span className="cursor-pointer text-xs text-gray-700">
           Recondicionado
         </span>

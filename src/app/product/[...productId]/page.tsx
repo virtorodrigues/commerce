@@ -7,6 +7,7 @@ import hipercardPayment from '../../../assets/payment-methods/hipercard-payment.
 import mastercardPayment from '../../../assets/payment-methods/mastercard-payment.svg'
 import visaPayment from '../../../assets/payment-methods/visa-payment.svg'
 import boletoPayment from '../../../assets/payment-methods/boleto-payment.svg'
+import Link from 'next/link'
 
 interface Product {
   id: string
@@ -14,7 +15,7 @@ interface Product {
   name: string
   price: number
   description?: string
-  condition: 'novo' | 'usado' | ''
+  condition: string
 }
 
 function BuyNow({ product }: { product: Product }) {
@@ -33,14 +34,14 @@ function BuyNow({ product }: { product: Product }) {
     <div className="flex h-fit w-full min-w-[288px] flex-col gap-4 rounded-lg border border-gray-200 p-5 md:w-72">
       <strong>Último disponível!</strong>
       <div className="flex flex-col gap-2">
-        <a
+        <Link
           href={getHrefToBuyProduct()}
           target="_blank"
           rel="noreferrer"
           className="rounded-md bg-green-500 py-3 text-center text-white duration-150 hover:opacity-90"
         >
           Comprar agora
-        </a>
+        </Link>
         {/* <button className="rounded-md bg-green-500/20 py-3 text-green-500 duration-150 hover:opacity-90">
                 Adicionar ao carrinho
               </button> */}
@@ -70,7 +71,13 @@ export default async function ProductDetails({
   return (
     <>
       <Header />
-      <div className="mx-auto my-0 mt-36 flex w-full flex-col justify-between gap-10 bg-white p-5 md:w-[1200px] md:flex-row md:p-10">
+      <Link
+        href={'/'}
+        className="text-md mx-auto mb-5 mt-36 flex w-full text-gray-400 md:w-[1200px] md:flex-row"
+      >
+        Voltar
+      </Link>
+      <div className="mx-auto my-0 flex w-full flex-col justify-between gap-10 bg-white p-5 md:w-[1200px] md:flex-row md:p-10">
         <div className="flex flex-col">
           <div className="flex flex-col border-b border-gray-200 pb-5 md:flex-row">
             <div className="md:py-5 md:pr-10">
