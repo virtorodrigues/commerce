@@ -7,6 +7,7 @@ export function Hero() {
       <Image
         className="h-96 w-full object-cover md:w-[1200px]"
         src={backgroundImage}
+        priority
         width={1200}
         height={400}
         alt=""

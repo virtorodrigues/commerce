@@ -25,8 +25,8 @@ export async function ListOfProducts({
           key={product.id}
           className="cursor-pointer rounded-lg border bg-white duration-100 hover:shadow-2xl"
         >
-          <Link href={`/product/${product.id}`}>
-            <div className="border-b-2 border-b-[#EBEBEB] p-2 md:p-7">
+          <Link href={`/product/${product.id}`} target="_top">
+            <div className="flex border-b-2 border-b-[#EBEBEB] p-2 md:p-7">
               <Image
                 className="h-40 w-96 object-contain"
                 width={200}
@@ -36,7 +36,7 @@ export async function ListOfProducts({
               />
             </div>
             <div className="flex flex-col gap-5 p-4 md:p-5">
-              <span className="text-base">
+              <span className="text-base font-medium">
                 {product.name.slice(0, 50)} {product.name.length > 50 && '...'}
               </span>
               <div className="flex flex-col items-start justify-between gap-2 md:flex-row">

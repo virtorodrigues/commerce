@@ -92,14 +92,16 @@ export default async function ProductDetails({
       <div className="mx-auto my-0 flex w-full flex-col justify-between gap-10 bg-white p-5 md:w-[1200px] md:flex-row md:p-10">
         <div className="flex flex-col">
           <div className="flex flex-col border-b border-gray-200 pb-5 md:flex-row">
-            <div className="md:py-5 md:pr-10">
+            <div className="flex justify-center md:py-5 md:pr-10">
               <Image width={300} height={200} src={product.image} alt="" />
             </div>
             <div className="flex max-w-sm flex-col">
-              <span className="mb-2 text-sm text-gray-700 first-letter:uppercase">
+              <span className="mb-2 text-sm font-medium text-gray-500 first-letter:uppercase">
                 {product.condition}
               </span>
-              <strong className="mb-3 text-xl">{product.name}</strong>
+              <strong className="mb-3 text-xl font-medium">
+                {product.name}
+              </strong>
               <span className="text-3xl ">R$ {product.price}</span>
               <div>
                 <span className="text-sm">em </span>
