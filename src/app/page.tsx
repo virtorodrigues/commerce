@@ -1,9 +1,9 @@
 import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
 import { ProductArea } from '@/components/ProductArea'
-// export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic'
 
-export const runtime = 'edge'
+// export const runtime = 'edge'
 
 export const metadata = {
   title: 'Lista de produtos',

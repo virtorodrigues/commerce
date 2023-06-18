@@ -6,7 +6,6 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
-  runtime: 'edge', // for Edge API Routes only
 }
 
 module.exports = nextConfig

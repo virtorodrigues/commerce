@@ -1,3 +1,4 @@
+import { getListOfProducts } from '@/utils/getStripeProducts'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -10,7 +11,9 @@ interface Product {
   condition: string
 }
 
-export async function ListOfProducts({ products }: { products: Product[] }) {
+export async function ListOfProducts() {
+  const products = await getListOfProducts({})
+
   return (
     <ul className="auto-rows grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-5">
       {products.map((product: Product) => (
