@@ -9,7 +9,7 @@ export const metadata = {
   description: 'Encontre o controle ideal para você aqui.',
 }
 
-export default function Home({
+export default async function Home({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined }
