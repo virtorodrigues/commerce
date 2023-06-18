@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { Filter } from './Filter'
 import { ListOfProducts } from './ListOfProducts'
+import { SkeletonLayout } from './SkeletonCard'
 
 // export const runtime = 'edge'
 
@@ -12,7 +13,7 @@ export async function ProductArea({
   return (
     <>
       <Filter searchParams={searchParams} />
-      <Suspense fallback={<div>Carregando...</div>}>
+      <Suspense fallback={<SkeletonLayout />}>
         {/* @ts-expect-error Async Component */}
         <ListOfProducts searchParams={searchParams} />
       </Suspense>

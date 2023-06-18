@@ -19,7 +19,7 @@ export async function ListOfProducts({
   const products = await getListOfProducts({ searchParams })
 
   return (
-    <ul className="auto-rows grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-5">
+    <ul className="auto-rows grid w-full grid-cols-2 gap-2 md:grid-cols-3 md:gap-5">
       {products.map((product: Product) => (
         <li
           key={product.id}
