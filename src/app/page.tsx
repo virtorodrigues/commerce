@@ -14,7 +14,6 @@ export default function Home({
 }: {
   searchParams?: { [key: string]: string | string[] | undefined }
 }) {
-
   return (
     <div className="flex flex-col items-center pb-12">
       <Header />
@@ -25,15 +24,4 @@ export default function Home({
       </div>
     </div>
   )
-}
-
-export async function getServerSideProps() {
-  // Faça sua lógica de busca de dados aqui
-  const currentUrl = 'https://www.example.com' // Exemplo de URL estática
-  console.log('dasdas')
-  return {
-    props: {
-      currentUrl,
-    },
-  }
 }
