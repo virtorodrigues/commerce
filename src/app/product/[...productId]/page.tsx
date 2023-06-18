@@ -10,6 +10,11 @@ import boletoPayment from '../../../assets/payment-methods/boleto-payment.svg'
 import arrowLeftIcon from '../../../assets/arrow-left.svg'
 import Link from 'next/link'
 
+export const metadata = {
+  title: 'Lista de produtos',
+  description: 'Encontre o controle ideal para você aqui.',
+}
+
 interface Product {
   id: string
   image: string

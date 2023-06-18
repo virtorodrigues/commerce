@@ -6,9 +6,6 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
-  env: {
-    runtime: 'edge',
-  },
 }
 
 module.exports = nextConfig
