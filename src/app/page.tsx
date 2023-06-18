@@ -2,7 +2,7 @@ import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
 import { ProductArea } from '@/components/ProductArea'
 
-// export const runtime = 'edge'
+export const runtime = 'edge'
 
 export const metadata = {
   title: 'Lista de produtos',
