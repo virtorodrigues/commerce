@@ -3,7 +3,7 @@ import backgroundImage from '../assets/background.png'
 
 export function Hero() {
   return (
-    <div className="relative inline-block">
+    <div className="relative mt-20 inline-block">
       <Image
         className="h-96 w-full object-cover md:w-[1200px]"
         src={backgroundImage}

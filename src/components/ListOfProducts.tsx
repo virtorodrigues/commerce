@@ -36,7 +36,7 @@ export async function ListOfProducts({
               />
             </div>
             <div className="flex flex-col gap-5 p-4 md:p-5">
-              <span className="text-base font-medium">
+              <span className="text-base font-medium leading-5">
                 {product.name.slice(0, 50)} {product.name.length > 50 && '...'}
               </span>
               <div className="flex flex-col items-start justify-between gap-2 md:flex-row">
