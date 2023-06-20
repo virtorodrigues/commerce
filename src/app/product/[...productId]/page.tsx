@@ -1,5 +1,4 @@
 import { Header } from '@/components/Header'
-import { getProduct } from '@/utils/getStripeProducts'
 import Image from 'next/image'
 import mlPayment from '../../../assets/payment-methods/ml-payment.svg'
 import eloPayment from '../../../assets/payment-methods/elo-payment.svg'
@@ -9,6 +8,7 @@ import visaPayment from '../../../assets/payment-methods/visa-payment.svg'
 import boletoPayment from '../../../assets/payment-methods/boleto-payment.svg'
 import arrowLeftIcon from '../../../assets/arrow-left.svg'
 import Link from 'next/link'
+import axios from 'axios'
 
 export const metadata = {
   title: 'Lista de produtos',
@@ -72,8 +72,14 @@ export default async function ProductDetails({
 }: {
   params: { productId: string[] }
 }) {
-  const product = await getProduct({ id: productId[0] })
-
+  // const product = await getProduct({ id: productId[0] })
+  const { products } = await axios
+    .get(`http://localhost:3000/api/product/list`, {
+      params: {
+        id: productId[0],
+      },
+    })
+    .then((response) => response.data)
   return (
     <>
       <Header />
@@ -93,36 +99,36 @@ export default async function ProductDetails({
         <div className="flex flex-col">
           <div className="flex flex-col border-b border-gray-200 pb-5 md:flex-row">
             <div className="flex justify-center md:py-5 md:pr-10">
-              <Image width={300} height={200} src={product.image} alt="" />
+              <Image width={300} height={200} src={products.image} alt="" />
             </div>
             <div className="flex max-w-sm flex-col">
               <span className="mb-2 text-sm font-medium text-gray-500 first-letter:uppercase">
-                {product.condition}
+                {products.condition}
               </span>
               <strong className="mb-3 text-xl font-medium">
-                {product.name}
+                {products.name}
               </strong>
-              <span className="text-3xl ">R$ {product.price}</span>
+              <span className="text-3xl ">R$ {products.price}</span>
               <div>
                 <span className="text-sm">em </span>
                 <span className="text-sm font-bold text-green-500">
-                  12x R${Math.floor(product.price / 12)}
+                  12x R${Math.floor(products.price / 12)}
                 </span>
               </div>
             </div>
             <div className="block py-5 md:hidden">
-              <BuyNow product={product} />
+              <BuyNow product={products} />
             </div>
           </div>
           <div className="">
             <span className="mb-3 mt-10 block text-xl">Descrição</span>
             <p className="text-md leading-7 text-gray-600">
-              {product.description}
+              {products.description}
             </p>
           </div>
         </div>
         <div className="flex flex-col-reverse gap-5 md:flex-col">
-          <BuyNow product={product} />
+          <BuyNow product={products} />
           <div className="flex h-fit w-full min-w-[288px] flex-col gap-4 rounded-lg border border-gray-200 p-5 md:w-72">
             <strong>Meios de pagamento</strong>
             <div>

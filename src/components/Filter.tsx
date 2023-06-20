@@ -1,15 +1,21 @@
 import Link from 'next/link'
 
+interface Product {
+  id: string
+  image: string
+  name: string
+  price: number
+  description?: string
+  condition: string
+}
+
 export function Filter({
-  searchParams,
+  getProductsFromApi,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined }
+  getProductsFromApi: ({ type }: { type?: string }) => Promise<Product[]>
 }) {
   return (
     <div className="hidden min-w-fit flex-col md:block ">
-      {searchParams && Object.entries(searchParams).length > 0 && (
-        <Link href="/">Limpar filtro</Link>
-      )}
       <div className="flex flex-col">
         <strong className="text-2xl font-normal text-gray-700">
           Controle xbox 360
@@ -18,18 +24,20 @@ export function Filter({
       </div>
       <div className="flex flex-col gap-2 pt-5">
         <strong className="text-lg font-normal">Condição</strong>
-        <Link
-          href="/api/filter?condition=novo"
-          className="cursor-pointer text-xs text-gray-700"
+        <button
+          // href="/api/product/filter?condition=usado"
+          onClick={() => getProductsFromApi({ type: 'novo' })}
+          className="cursor-pointer text-left text-xs text-gray-700"
         >
           Novo
-        </Link>
-        <Link
-          href="/api/filter?condition=usado"
-          className="cursor-pointer text-xs text-gray-700"
+        </button>
+        <button
+          // href="/api/product/filter?condition=usado"
+          onClick={() => getProductsFromApi({ type: 'usado' })}
+          className="cursor-pointer text-left text-xs text-gray-700"
         >
           Usado
-        </Link>
+        </button>
         <span className="cursor-pointer text-xs text-gray-700">
           Recondicionado
         </span>
