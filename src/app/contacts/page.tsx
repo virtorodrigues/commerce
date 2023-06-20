@@ -37,7 +37,7 @@ export default function Contacts() {
           target="_blank"
           rel="noreferrer"
           href="https://www.instagram.com/manutencao.controles.games/"
-          className="mx-auto flex flex-row items-center gap-3 bg-white px-4 py-4 duration-150 hover:shadow-2xl md:w-[1200px] md:p-10"
+          className="mx-auto flex w-full flex-row items-center gap-3 bg-white px-4 py-4 duration-150 hover:shadow-2xl md:w-[1200px] md:p-10"
         >
           <Image width={40} height={40} src={instagramIcon} alt="" />
           <div className="flex flex-col">

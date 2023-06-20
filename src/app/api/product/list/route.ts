@@ -34,7 +34,6 @@ export async function GET(request: NextRequest) {
     if (price) {
       searchParams = { ...searchParams, price }
     }
-    console.log(searchParams)
 
     const products = await getListOfProducts({ searchParams })
 
@@ -102,8 +101,6 @@ function filterAsPrice({
   value: string
 }) {
   const [minPrice, maxPrice] = value.split('|')
-  console.log(minPrice)
-  console.log(maxPrice)
   return products.filter(
     (product: Product) =>
       product.price >= (Number(minPrice) as number) &&

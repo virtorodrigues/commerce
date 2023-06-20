@@ -4,7 +4,11 @@ import { Filter } from './Filter'
 import { ListOfProducts } from './ListOfProducts'
 import { SkeletonLayout } from './SkeletonLayout'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { Cross1Icon, CaretDownIcon } from '@radix-ui/react-icons'
+import {
+  Cross1Icon,
+  MixerHorizontalIcon,
+  LightningBoltIcon,
+} from '@radix-ui/react-icons'
 
 interface Product {
   id: string
@@ -25,11 +29,11 @@ const DropdownMenuDemo = ({ children }: { children: ReactNode }) => {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button
-          className="ml-auto mr-2 flex w-fit items-center gap-1 rounded-lg bg-white px-2 py-1 text-gray-500"
+          className="flex w-fit items-center gap-2 rounded-lg bg-purple-500/20 px-3 py-1 text-sm text-purple-500"
           aria-label="Customise"
         >
+          <MixerHorizontalIcon />
           Filtrar
-          <CaretDownIcon />
         </button>
       </DropdownMenu.Trigger>
 
@@ -118,7 +122,11 @@ export function ProductArea() {
           handleFilterByPriceForm={handleFilterByPriceForm}
         />
       </div>
-      <div className="block min-w-fit flex-col md:hidden">
+      <div className="mr-2 flex flex-row justify-end gap-2 md:hidden">
+        <span className="flex items-center gap-1 rounded-lg bg-purple-500/20 px-3 py-1 text-sm text-purple-500">
+          <LightningBoltIcon />
+          <span>{products?.length || 0} resultados</span>
+        </span>
         <DropdownMenuDemo>
           <Filter
             handleFilters={handleFilters}
