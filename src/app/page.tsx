@@ -19,7 +19,7 @@ export default async function Home() {
       <Hero />
       <div className="mt-10 flex w-full flex-row gap-8 md:mt-16 md:w-[1200px]">
         {/* <Suspense fallback={<SkeletonLayout />}> */}
-        {/* @ts-expect-error Async Component */}
+
         <ProductArea />
         {/* </Suspense> */}
       </div>

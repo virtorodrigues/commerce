@@ -43,7 +43,7 @@ type ResponseType = {
   response: { data: Stripe.Product[] }
 }
 
-export async function getProduct({ id }: { id: string }) {
+async function getProduct({ id }: { id: string }) {
   const response = await stripe.products.list({ ids: [id as string] })
 
   const product: Product[] = await getData({ response })
@@ -51,7 +51,7 @@ export async function getProduct({ id }: { id: string }) {
   return product[0] || []
 }
 
-export async function getListOfProducts({
+async function getListOfProducts({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined }
