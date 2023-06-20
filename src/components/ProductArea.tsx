@@ -45,7 +45,7 @@ export function ProductArea() {
 
   useEffect(() => {
     async function getProducts() {
-      await getProductsFromApi({})
+      await getProductsFromApi()
     }
 
     getProducts()
