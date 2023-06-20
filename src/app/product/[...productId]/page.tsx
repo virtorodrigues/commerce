@@ -73,13 +73,15 @@ export default async function ProductDetails({
   params: { productId: string[] }
 }) {
   // const product = await getProduct({ id: productId[0] })
-  const { products } = await axios
-    .get(`http://localhost:3000/api/product/list`, {
-      params: {
-        id: productId[0],
+  const { products } = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL_BASE}api/product/list?id=${productId[0]}`,
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 60 * 60,
       },
-    })
-    .then((response) => response.data)
+    },
+  ).then((response) => response.json())
   return (
     <>
       <Header />
