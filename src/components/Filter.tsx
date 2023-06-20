@@ -47,6 +47,7 @@ export function Filter({
       <div className="flex flex-col gap-2 pt-5">
         <strong className="text-lg font-normal">Condição</strong>
         <button
+          name="filter-by-new"
           onClick={() =>
             handleFilters({ type: 'condition', value: 'novo', label: 'Novo' })
           }
@@ -55,6 +56,7 @@ export function Filter({
           Novo
         </button>
         <button
+          name="filter-by-used"
           onClick={() =>
             handleFilters({ type: 'condition', value: 'usado', label: 'Usado' })
           }
@@ -65,7 +67,7 @@ export function Filter({
       </div>
       <div className="flex flex-col gap-2 pt-5">
         <strong className="text-lg font-normal text-gray-700">Preço</strong>
-        <span
+        <button
           onClick={() =>
             handleFilters({
               type: 'price',
@@ -73,12 +75,12 @@ export function Filter({
               label: 'Até R$ 300',
             })
           }
-          className="cursor-pointer text-xs text-gray-700"
+          className="cursor-pointer text-left text-xs text-gray-700"
         >
           Até R$ 300
-        </span>
-        <span
-          className="cursor-pointer text-xs text-gray-700"
+        </button>
+        <button
+          className="cursor-pointer text-left text-xs text-gray-700"
           onClick={() =>
             handleFilters({
               type: 'price',
@@ -88,7 +90,7 @@ export function Filter({
           }
         >
           R$300 a R$400
-        </span>
+        </button>
 
         <div className="flex flex-row gap-2">
           <Formik

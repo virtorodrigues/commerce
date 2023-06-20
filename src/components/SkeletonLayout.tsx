@@ -1,5 +1,5 @@
 export function SkeletonLayout() {
-  const skeletonCards = Array.from({ length: 6 })
+  const skeletonCards = Array.from({ length: 3 })
 
   return (
     <ul className="auto-rows grid w-full grid-cols-2 gap-2 md:grid-cols-3 md:gap-5">

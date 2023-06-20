@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { Filter } from './Filter'
 import { ListOfProducts } from './ListOfProducts'
-import { SkeletonLayout } from './SkeletonCard'
+import { SkeletonLayout } from './SkeletonLayout'
 
 interface Product {
   id: string
@@ -22,15 +22,18 @@ type FilterType = {
 export function ProductArea() {
   const [products, setProducts] = useState<Product[] | null>(null)
   const [filters, setFilters] = useState<FilterType[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     async function getProductsFromApi(): Promise<Product[]> {
+      await setIsLoading(true)
       const params =
         '?' +
         filters.map((filter) => `${filter.type}=${filter.value}`).join('&')
 
       const apiUrl =
         `${process.env.NEXT_PUBLIC_API_URL_BASE}api/product/list` + params
+
       const result = await fetch(apiUrl, {
         cache: 'force-cache',
         next: {
@@ -40,7 +43,7 @@ export function ProductArea() {
         const data = await response.json()
         return data
       })
-
+      setIsLoading(false)
       setProducts(result.products)
       return result.products
     }
@@ -79,7 +82,11 @@ export function ProductArea() {
         removeFilter={removeFilter}
         handleFilterByPriceForm={handleFilterByPriceForm}
       />
-      {products ? <ListOfProducts products={products} /> : <SkeletonLayout />}
+      {isLoading || !products ? (
+        <SkeletonLayout />
+      ) : (
+        <ListOfProducts products={products} />
+      )}
     </>
   )
 }
