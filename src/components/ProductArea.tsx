@@ -23,7 +23,8 @@ export function ProductArea() {
   }): Promise<Product[]> {
     const param = type ? `?condition=${type}` : ''
 
-    const apiUrl = `http://localhost:3000/api/product/list` + param
+    const apiUrl =
+      `${process.env.NEXT_PUBLIC_API_URL_BASE}api/product/list` + param
     const result = await fetch(apiUrl, {
       cache: 'force-cache',
       next: {
