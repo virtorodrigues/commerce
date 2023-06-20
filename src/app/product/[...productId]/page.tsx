@@ -74,15 +74,8 @@ export default async function ProductDetails({
   // const product = await getProduct({ id: productId[0] })
   const { product } = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL_BASE}api/product/list?id=${productId[0]}`,
-    {
-      cache: 'force-cache',
-      next: {
-        revalidate: 60 * 60,
-      },
-    },
   ).then((response) => response.json())
 
-  console.log(product)
   return (
     <>
       <Header />

@@ -1,67 +1,167 @@
+import Image from 'next/image'
+import arrowLeftIcon from '../assets/arrow-right.svg'
+import { Formik } from 'formik'
+
 type FilterType = {
   type: string
   value: string
+  label: string
 }
 
 export function Filter({
   handleFilters,
+  handleFilterByPriceForm,
+  removeFilter,
+  filters,
+  productCounter,
 }: {
-  handleFilters: ({ type, value }: FilterType) => void
+  handleFilters: ({ type, value, label }: FilterType) => void
+  handleFilterByPriceForm: () => void
+  removeFilter: ({ key }: { key: string }) => void
+  filters: FilterType[]
+  productCounter: number
 }) {
   return (
     <div className="hidden min-w-fit flex-col md:block ">
-      <div className="flex flex-col">
-        <strong className="text-2xl font-normal text-gray-700">
-          Controle xbox 360
-        </strong>
-        <span className="text-xs text-gray-700">10 resultados</span>
+      <div className="flex flex-col gap-2">
+        {!!filters.length && (
+          <div className="flex flex-col gap-2">
+            {filters &&
+              filters.map((filter) => (
+                <button
+                  onClick={() => removeFilter({ key: filter.label })}
+                  key={filter.label}
+                  className="flex w-fit items-center gap-2 rounded-lg bg-gray-300 px-2 py-1 text-xs font-medium text-gray-500"
+                >
+                  <span>{filter.label}</span>
+                  <span>x</span>
+                </button>
+              ))}
+          </div>
+        )}
+        <span className="text-xs text-gray-700">
+          {productCounter} resultados
+        </span>
       </div>
+
       <div className="flex flex-col gap-2 pt-5">
         <strong className="text-lg font-normal">Condição</strong>
         <button
-          onClick={() => handleFilters({ type: 'condition', value: 'novo' })}
+          onClick={() =>
+            handleFilters({ type: 'condition', value: 'novo', label: 'Novo' })
+          }
           className="cursor-pointer text-left text-xs text-gray-700"
         >
           Novo
         </button>
         <button
-          onClick={() => handleFilters({ type: 'condition', value: 'usado' })}
+          onClick={() =>
+            handleFilters({ type: 'condition', value: 'usado', label: 'Usado' })
+          }
           className="cursor-pointer text-left text-xs text-gray-700"
         >
           Usado
         </button>
-        <span className="cursor-pointer text-xs text-gray-700">
-          Recondicionado
-        </span>
       </div>
       <div className="flex flex-col gap-2 pt-5">
         <strong className="text-lg font-normal text-gray-700">Preço</strong>
         <span
-          onClick={() => handleFilters({ type: 'price', value: '300' })}
+          onClick={() =>
+            handleFilters({
+              type: 'price',
+              value: '0 | 300',
+              label: 'Até R$ 300',
+            })
+          }
           className="cursor-pointer text-xs text-gray-700"
         >
           Até R$ 300
         </span>
-        <span className="cursor-pointer text-xs text-gray-700">
-          R$200 a R$400
+        <span
+          className="cursor-pointer text-xs text-gray-700"
+          onClick={() =>
+            handleFilters({
+              type: 'price',
+              value: '300 | 400',
+              label: 'R$300 a R$400',
+            })
+          }
+        >
+          R$300 a R$400
         </span>
 
         <div className="flex flex-row gap-2">
-          <input
-            className="w-20 rounded p-2 px-3 text-xs"
-            type="text"
-            name=""
-            id=""
-            placeholder="Mínimo"
-          />
-          <span className="text-gray-400">__</span>
-          <input
-            className="w-20 rounded p-2 px-3 text-xs"
-            type="text"
-            name=""
-            id=""
-            placeholder="Máximo"
-          />
+          <Formik
+            initialValues={{ minPrice: 0, maxPrice: 0 }}
+            validate={(values) => {
+              const errors = {} as { minPrice?: string; maxPrice?: string }
+              if (values.maxPrice <= 0) {
+                errors.maxPrice = 'Invalid maxPrice'
+              }
+              if (values.minPrice > values.maxPrice) {
+                errors.minPrice = 'Invalid minPrice'
+              }
+              return errors
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+              handleFilters({
+                type: 'price',
+                value: `${values.minPrice} | ${values.maxPrice}`,
+                label: `R$${values.minPrice} a R$${values.maxPrice}`,
+              })
+            }}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <form
+                onSubmit={handleSubmit}
+                action=""
+                className="flex flex-row gap-2"
+              >
+                <input
+                  className="w-20 rounded p-2 px-3 text-xs"
+                  type="number"
+                  onChange={handleChange}
+                  value={values.minPrice}
+                  name="minPrice"
+                  id="minPrice"
+                  placeholder="Mínimo"
+                  required
+                  step={50}
+                  min={0}
+                />
+                <span className="text-gray-400">__</span>
+                <input
+                  className="w-20 rounded p-2 px-3 text-xs"
+                  type="number"
+                  onChange={handleChange}
+                  value={values.maxPrice}
+                  name="maxPrice"
+                  id="maxPrice"
+                  placeholder="Máximo"
+                  required
+                  step={50}
+                  min={0}
+                />
+                <button className="text-white" type="submit">
+                  <Image
+                    src={arrowLeftIcon}
+                    width={30}
+                    height={10}
+                    alt=""
+                    className="rotate-180 rounded-full bg-purple-500 p-2 text-white"
+                  />
+                </button>
+              </form>
+            )}
+          </Formik>
         </div>
       </div>
     </div>

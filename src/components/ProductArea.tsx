@@ -16,43 +16,40 @@ interface Product {
 type FilterType = {
   type: string
   value: string
+  label: string
 }
 
 export function ProductArea() {
   const [products, setProducts] = useState<Product[] | null>(null)
   const [filters, setFilters] = useState<FilterType[]>([])
 
-  async function getProductsFromApi(): Promise<Product[]> {
-    const params = filters
-      .map((filter) => `?${filter.type}=${filter.value}`)
-      .join('')
-
-    const apiUrl =
-      `${process.env.NEXT_PUBLIC_API_URL_BASE}api/product/list` + params
-    const result = await fetch(apiUrl, {
-      cache: 'force-cache',
-      next: {
-        revalidate: 20,
-      },
-    }).then(async (response) => {
-      const data = await response.json()
-      return data
-    })
-
-    setProducts(result.products)
-    return result.products
-  }
-
   useEffect(() => {
-    async function getProducts() {
-      await getProductsFromApi()
+    async function getProductsFromApi(): Promise<Product[]> {
+      const params =
+        '?' +
+        filters.map((filter) => `${filter.type}=${filter.value}`).join('&')
+
+      const apiUrl =
+        `${process.env.NEXT_PUBLIC_API_URL_BASE}api/product/list` + params
+      const result = await fetch(apiUrl, {
+        cache: 'force-cache',
+        next: {
+          revalidate: 60,
+        },
+      }).then(async (response) => {
+        const data = await response.json()
+        return data
+      })
+
+      setProducts(result.products)
+      return result.products
     }
 
-    getProducts()
+    getProductsFromApi()
   }, [filters])
 
-  function handleFilters({ type, value }: FilterType) {
-    const newFilter = { type, value }
+  function handleFilters({ type, value, label }: FilterType) {
+    const newFilter = { type, value, label }
     const isAccumulatorFilter = filters.every((filter) => filter.type !== type)
 
     if (isAccumulatorFilter) {
@@ -65,9 +62,23 @@ export function ProductArea() {
     }
   }
 
+  function removeFilter({ key }: { key: string }) {
+    const newFilters = filters.filter((filter) => filter.label !== key)
+
+    setFilters(newFilters)
+  }
+
+  function handleFilterByPriceForm() {}
+
   return (
     <>
-      <Filter handleFilters={handleFilters} />
+      <Filter
+        handleFilters={handleFilters}
+        filters={filters}
+        productCounter={products?.length || 0}
+        removeFilter={removeFilter}
+        handleFilterByPriceForm={handleFilterByPriceForm}
+      />
       {products ? <ListOfProducts products={products} /> : <SkeletonLayout />}
     </>
   )

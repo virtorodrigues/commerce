@@ -34,6 +34,7 @@ export async function GET(request: NextRequest) {
     if (price) {
       searchParams = { ...searchParams, price }
     }
+    console.log(searchParams)
 
     const products = await getListOfProducts({ searchParams })
 
@@ -51,9 +52,7 @@ type ResponseType = {
 
 async function getProduct({ id }: { id: string }) {
   const response = await stripe.products.list({ ids: [id as string] })
-
   const product: Product[] = await getData({ response })
-  console.log(product)
 
   return product[0] || []
 }
@@ -72,12 +71,56 @@ async function getListOfProducts({
 
   let listFiltred = (await listOfProducts) as Product[]
   if (fiterType?.length) {
-    listFiltred = listFiltred.filter(
-      (product) => fiterValues && product.condition === fiterValues[0],
-    )
+    fiterType.map((type, index) => {
+      switch (type) {
+        case 'condition':
+          listFiltred = filterAsCondition({
+            products: listFiltred,
+            value: fiterValues ? (fiterValues[index] as string) : '',
+          })
+          break
+        case 'price':
+          listFiltred = filterAsPrice({
+            products: listFiltred,
+            value: fiterValues ? (fiterValues[index] as string) : '',
+          })
+          break
+      }
+
+      return listFiltred
+    })
   }
 
   return listFiltred
+}
+
+function filterAsPrice({
+  products,
+  value,
+}: {
+  products: Product[]
+  value: string
+}) {
+  const [minPrice, maxPrice] = value.split('|')
+  console.log(minPrice)
+  console.log(maxPrice)
+  return products.filter(
+    (product: Product) =>
+      product.price >= (Number(minPrice) as number) &&
+      product.price <= (Number(maxPrice) as number),
+  )
+}
+
+function filterAsCondition({
+  products,
+  value,
+}: {
+  products: Product[]
+  value: string
+}) {
+  return products.filter(
+    (product: Product) => product.condition === (value as string),
+  )
 }
 
 async function getData({ response }: ResponseType) {
