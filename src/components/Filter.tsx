@@ -56,6 +56,7 @@ export function Filter({
           Novo
         </button>
         <button
+          id="filter-by-used"
           name="filter-by-used"
           onClick={() =>
             handleFilters({ type: 'condition', value: 'usado', label: 'Usado' })
@@ -68,6 +69,8 @@ export function Filter({
       <div className="flex flex-col gap-2 pt-5">
         <strong className="text-lg font-normal text-gray-700">Preço</strong>
         <button
+          id="filter-by-price-fixed"
+          name="filter-by-price-fixed"
           onClick={() =>
             handleFilters({
               type: 'price',
@@ -80,6 +83,8 @@ export function Filter({
           Até R$ 300
         </button>
         <button
+          id="filter-by-price-range"
+          name="filter-by-price-range"
           className="cursor-pointer text-left text-xs text-gray-700"
           onClick={() =>
             handleFilters({
@@ -152,7 +157,12 @@ export function Filter({
                   step={50}
                   min={0}
                 />
-                <button className="text-white" type="submit">
+                <button
+                  className="text-white"
+                  name="filter-by-price-button-form"
+                  id="filter-by-price-button-form"
+                  type="submit"
+                >
                   <Image
                     src={arrowLeftIcon}
                     width={30}
