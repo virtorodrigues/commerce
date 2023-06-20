@@ -17,7 +17,7 @@ export default async function Home() {
     <div className="flex flex-col items-center pb-12">
       <Header />
       <Hero />
-      <div className="mt-10 flex w-full flex-row gap-8 md:mt-16 md:w-[1200px]">
+      <div className="mt-10 flex w-full flex-col gap-8 md:mt-16 md:w-[1200px] md:flex-row">
         {/* <Suspense fallback={<SkeletonLayout />}> */}
 
         <ProductArea />

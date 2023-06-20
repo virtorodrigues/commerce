@@ -22,7 +22,7 @@ export function Filter({
   productCounter: number
 }) {
   return (
-    <div className="hidden min-w-fit flex-col md:block ">
+    <div className="min-w-fit flex-col">
       <div className="flex flex-col gap-2">
         {!!filters.length && (
           <div className="flex flex-col gap-2">
@@ -128,7 +128,7 @@ export function Filter({
                 className="flex flex-row gap-2"
               >
                 <input
-                  className="w-20 rounded p-2 px-3 text-xs"
+                  className="w-20 rounded border border-gray-300 p-2 px-3 text-xs md:border-white"
                   type="number"
                   onChange={handleChange}
                   value={values.minPrice}
@@ -141,7 +141,7 @@ export function Filter({
                 />
                 <span className="text-gray-400">__</span>
                 <input
-                  className="w-20 rounded p-2 px-3 text-xs"
+                  className="w-20 rounded border border-gray-300 p-2 px-3 text-xs md:border-white"
                   type="number"
                   onChange={handleChange}
                   value={values.maxPrice}
