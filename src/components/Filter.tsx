@@ -1,16 +1,12 @@
-interface Product {
-  id: string
-  image: string
-  name: string
-  price: number
-  description?: string
-  condition: string
+type FilterType = {
+  type: string
+  value: string
 }
 
 export function Filter({
-  getProductsFromApi,
+  handleFilters,
 }: {
-  getProductsFromApi: ({ type }: { type?: string }) => Promise<Product[]>
+  handleFilters: ({ type, value }: FilterType) => void
 }) {
   return (
     <div className="hidden min-w-fit flex-col md:block ">
@@ -23,15 +19,13 @@ export function Filter({
       <div className="flex flex-col gap-2 pt-5">
         <strong className="text-lg font-normal">Condição</strong>
         <button
-          // href="/api/product/filter?condition=usado"
-          onClick={() => getProductsFromApi({ type: 'novo' })}
+          onClick={() => handleFilters({ type: 'condition', value: 'novo' })}
           className="cursor-pointer text-left text-xs text-gray-700"
         >
           Novo
         </button>
         <button
-          // href="/api/product/filter?condition=usado"
-          onClick={() => getProductsFromApi({ type: 'usado' })}
+          onClick={() => handleFilters({ type: 'condition', value: 'usado' })}
           className="cursor-pointer text-left text-xs text-gray-700"
         >
           Usado
@@ -42,7 +36,12 @@ export function Filter({
       </div>
       <div className="flex flex-col gap-2 pt-5">
         <strong className="text-lg font-normal text-gray-700">Preço</strong>
-        <span className="cursor-pointer text-xs text-gray-700">Até R$ 300</span>
+        <span
+          onClick={() => handleFilters({ type: 'price', value: '300' })}
+          className="cursor-pointer text-xs text-gray-700"
+        >
+          Até R$ 300
+        </span>
         <span className="cursor-pointer text-xs text-gray-700">
           R$200 a R$400
         </span>

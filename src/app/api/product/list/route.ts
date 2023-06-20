@@ -2,34 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
 
-export async function GET(request: NextRequest) {
-  /* const { searchParams } = new URL(request.url)
-  const condition = searchParams.get('condition') as string
-
-  const redirectURL = new URL('/', request.url)
-  redirectURL.searchParams.set('condition', condition)
-
-  return NextResponse.redirect(redirectURL) */
-
-  const { searchParams } = new URL(request.url)
-  const id = searchParams.get('id')
-  const condition = searchParams.get('condition')
-  if (condition) {
-    const products = await getListOfProducts({ searchParams: { condition } })
-
-    return NextResponse.json({ products })
-    // const products = await getListOfProducts({
-    //   searchParams: { condition },
-    // })
-
-    // return NextResponse.json({ products })
-  }
-
-  const products = id ? await getProduct({ id }) : await getListOfProducts({})
-
-  return NextResponse.json({ products })
-}
-
 interface Product {
   id: string
   image: string
@@ -37,6 +9,40 @@ interface Product {
   price: number
   description?: string
   condition: string
+}
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url)
+  const id = searchParams.get('id')
+  const condition = searchParams.get('condition')
+  const price = searchParams.get('price')
+
+  if (id) {
+    const product = await getProduct({ id })
+    return NextResponse.json({ product })
+  }
+
+  const isNeedFilter = !!(condition || price)
+
+  if (isNeedFilter) {
+    let searchParams = {}
+
+    if (condition) {
+      searchParams = { condition }
+    }
+
+    if (price) {
+      searchParams = { ...searchParams, price }
+    }
+
+    const products = await getListOfProducts({ searchParams })
+
+    return NextResponse.json({ products })
+  }
+
+  const products = await getListOfProducts({})
+
+  return NextResponse.json({ products })
 }
 
 type ResponseType = {
@@ -47,6 +53,7 @@ async function getProduct({ id }: { id: string }) {
   const response = await stripe.products.list({ ids: [id as string] })
 
   const product: Product[] = await getData({ response })
+  console.log(product)
 
   return product[0] || []
 }

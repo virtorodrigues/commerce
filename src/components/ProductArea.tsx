@@ -13,22 +13,26 @@ interface Product {
   condition: string
 }
 
+type FilterType = {
+  type: string
+  value: string
+}
+
 export function ProductArea() {
   const [products, setProducts] = useState<Product[] | null>(null)
+  const [filters, setFilters] = useState<FilterType[]>([])
 
-  async function getProductsFromApi({
-    type,
-  }: {
-    type?: string
-  }): Promise<Product[]> {
-    const param = type ? `?condition=${type}` : ''
+  async function getProductsFromApi(): Promise<Product[]> {
+    const params = filters
+      .map((filter) => `?${filter.type}=${filter.value}`)
+      .join('')
 
     const apiUrl =
-      `${process.env.NEXT_PUBLIC_API_URL_BASE}api/product/list` + param
+      `${process.env.NEXT_PUBLIC_API_URL_BASE}api/product/list` + params
     const result = await fetch(apiUrl, {
       cache: 'force-cache',
       next: {
-        revalidate: 60 * 60,
+        revalidate: 20,
       },
     }).then(async (response) => {
       const data = await response.json()
@@ -45,11 +49,25 @@ export function ProductArea() {
     }
 
     getProducts()
-  }, [setProducts])
+  }, [filters])
+
+  function handleFilters({ type, value }: FilterType) {
+    const newFilter = { type, value }
+    const isAccumulatorFilter = filters.every((filter) => filter.type !== type)
+
+    if (isAccumulatorFilter) {
+      setFilters((state) => [...state, newFilter])
+    } else {
+      const newFilters = filters.map((filter) =>
+        filter.type === type ? newFilter : filter,
+      )
+      setFilters(newFilters)
+    }
+  }
 
   return (
     <>
-      <Filter getProductsFromApi={getProductsFromApi} />
+      <Filter handleFilters={handleFilters} />
       {products ? <ListOfProducts products={products} /> : <SkeletonLayout />}
     </>
   )
