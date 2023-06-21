@@ -4,9 +4,10 @@ import Image from 'next/image'
 import logo from '../assets/logo.png'
 import Link from 'next/link'
 
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
+import { ProductContext } from '@/app/contexts/ProductContext'
 
 const DropdownMenuDemo = () => {
   return (
@@ -48,15 +49,48 @@ const DropdownMenuDemo = () => {
 }
 
 export function Header() {
+  const [search, setSearch] = useState('')
+  const { getListOfProductsName, handleFilters } = useContext(ProductContext)
+
+  const productFiltred = getListOfProductsName()?.filter((product) => {
+    return product.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+  })
+
   return (
     <div className="fixed top-0 z-[99] h-24 w-full bg-purple-500">
       <div className="mx-auto my-0 flex h-full w-full items-center justify-between gap-8 px-4 xl:w-[1200px]">
         <Image src={logo} width={70} alt="" />
-        <input
-          className=" h-10 w-2/3 rounded pl-3 md:block"
-          type="text"
-          placeholder="Digite o que você quer encontrar"
-        />
+        <div className="w-2/3">
+          <input
+            className=" h-10 w-full rounded pl-3 md:block"
+            type="text"
+            placeholder="Digite o que você quer encontrar"
+            value={search}
+            onChange={(value) => setSearch(value.target.value)}
+          />
+          {productFiltred && search && (
+            <div className="fixed mt-1.5 flex flex-col rounded-lg bg-white py-2">
+              {productFiltred.map((product, index) => (
+                <button
+                  onClick={() => {
+                    const label =
+                      product.slice(0, 20) + (product.length > 20 ? '...' : '')
+                    setSearch('')
+                    handleFilters({
+                      type: 'productName',
+                      value: product,
+                      label,
+                    })
+                  }}
+                  className="px-2 text-left hover:bg-purple-500 hover:text-white"
+                  key={index}
+                >
+                  {product.slice(0, 50) + (product.length > 50 ? '...' : '')}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         <div className="block h-8 w-8 text-white md:hidden">
           <DropdownMenuDemo />
         </div>

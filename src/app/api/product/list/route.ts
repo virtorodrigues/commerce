@@ -1,43 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
-
-interface Product {
-  id: string
-  image: string
-  name: string
-  price: number
-  description?: string
-  condition: string
-}
+import { Product } from '@/types/product.types'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const id = searchParams.get('id')
-  const condition = searchParams.get('condition')
-  const price = searchParams.get('price')
 
   if (id) {
     const product = await getProduct({ id })
     return NextResponse.json({ product })
-  }
-
-  const isNeedFilter = !!(condition || price)
-
-  if (isNeedFilter) {
-    let searchParams = {}
-
-    if (condition) {
-      searchParams = { condition }
-    }
-
-    if (price) {
-      searchParams = { ...searchParams, price }
-    }
-
-    const products = await getListOfProducts({ searchParams })
-
-    return NextResponse.json({ products })
   }
 
   const products = await getListOfProducts({})
@@ -61,63 +33,13 @@ async function getListOfProducts({
 }: {
   searchParams?: { [key: string]: string | string[] | undefined }
 }): Promise<Product[]> {
-  const fiterType = searchParams && Object.keys(searchParams)
-  const fiterValues = searchParams && Object.values(searchParams)
-
   const response = await stripe.products.list()
 
   const listOfProducts = getData({ response })
 
-  let listFiltred = (await listOfProducts) as Product[]
-  if (fiterType?.length) {
-    fiterType.map((type, index) => {
-      switch (type) {
-        case 'condition':
-          listFiltred = filterAsCondition({
-            products: listFiltred,
-            value: fiterValues ? (fiterValues[index] as string) : '',
-          })
-          break
-        case 'price':
-          listFiltred = filterAsPrice({
-            products: listFiltred,
-            value: fiterValues ? (fiterValues[index] as string) : '',
-          })
-          break
-      }
-
-      return listFiltred
-    })
-  }
+  const listFiltred = (await listOfProducts) as Product[]
 
   return listFiltred
-}
-
-function filterAsPrice({
-  products,
-  value,
-}: {
-  products: Product[]
-  value: string
-}) {
-  const [minPrice, maxPrice] = value.split('|')
-  return products.filter(
-    (product: Product) =>
-      product.price >= (Number(minPrice) as number) &&
-      product.price <= (Number(maxPrice) as number),
-  )
-}
-
-function filterAsCondition({
-  products,
-  value,
-}: {
-  products: Product[]
-  value: string
-}) {
-  return products.filter(
-    (product: Product) => product.condition === (value as string),
-  )
 }
 
 async function getData({ response }: ResponseType) {

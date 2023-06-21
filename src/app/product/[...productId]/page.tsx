@@ -1,4 +1,3 @@
-import { Header } from '@/components/Header'
 import Image from 'next/image'
 import mlPayment from '../../../assets/payment-methods/ml-payment.svg'
 import eloPayment from '../../../assets/payment-methods/elo-payment.svg'
@@ -8,19 +7,12 @@ import visaPayment from '../../../assets/payment-methods/visa-payment.svg'
 import boletoPayment from '../../../assets/payment-methods/boleto-payment.svg'
 import arrowLeftIcon from '../../../assets/arrow-left.svg'
 import Link from 'next/link'
+import { Layout } from '@/components/Layout'
+import { Product } from '@/types/product.types'
 
 export const metadata = {
   title: 'Lista de produtos',
   description: 'Encontre o controle ideal para você aqui.',
-}
-
-interface Product {
-  id: string
-  image: string
-  name: string
-  price: number
-  description?: string
-  condition: string
 }
 
 function BuyNow({ product }: { product: Product }) {
@@ -77,8 +69,7 @@ export default async function ProductDetails({
   ).then((response) => response.json())
 
   return (
-    <>
-      <Header />
+    <Layout>
       <div className="mx-auto mb-5 mt-28 flex w-full items-center pl-3 text-sm text-gray-500 md:w-[1200px] md:flex-row md:pl-0">
         <Link href={'/'} className="flex gap-1">
           <Image
@@ -150,6 +141,6 @@ export default async function ProductDetails({
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   )
 }

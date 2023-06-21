@@ -1,14 +1,7 @@
+import { Product } from '@/types/product.types'
 import Image from 'next/image'
 import Link from 'next/link'
 
-interface Product {
-  id: string
-  image: string
-  name: string
-  price: number
-  description?: string
-  condition: string
-}
 
 export function ListOfProducts({ products }: { products: Product[] }) {
   return (

@@ -1,14 +1,6 @@
 import { stripe } from '@/lib/stripe'
+import { Product } from '@/types/product.types'
 import Stripe from 'stripe'
-
-interface Product {
-  id: string
-  image: string
-  name: string
-  price: number
-  description?: string
-  condition: string
-}
 
 type ResponseType = {
   response: { data: Stripe.Product[] }

@@ -3,25 +3,12 @@ import arrowLeftIcon from '../../assets/arrow-right.svg'
 import { Formik } from 'formik'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import clsx from 'clsx'
+import { useContext } from 'react'
+import { ProductContext } from '@/app/contexts/ProductContext'
 
-type FilterType = {
-  type: string
-  value: string
-  label: string
-}
+export function Filter({ productCounter }: { productCounter: number }) {
+  const { handleFilters, filters, removeFilter } = useContext(ProductContext)
 
-export function Filter({
-  handleFilters,
-  removeFilter,
-  filters,
-  productCounter,
-}: {
-  handleFilters: ({ type, value, label }: FilterType) => void
-  handleFilterByPriceForm: () => void
-  removeFilter: ({ key }: { key: string }) => void
-  filters: FilterType[]
-  productCounter: number
-}) {
   return (
     <div className="min-w-fit flex-col">
       <div className="flex flex-col gap-2">
@@ -163,7 +150,7 @@ export function Filter({
                   name="filter-by-price-button-form"
                   id="filter-by-price-button-form"
                   type="submit"
-                  disabled={!(values.maxPrice && values.minPrice)}
+                  disabled={!(values.maxPrice && values.minPrice >= 0)}
                 >
                   <Image
                     src={arrowLeftIcon}
@@ -171,8 +158,8 @@ export function Filter({
                     height={10}
                     alt=""
                     className={clsx('rotate-180 rounded-full p-2 text-white', {
-                      'bg-gray-300': !(values.maxPrice && values.minPrice),
-                      'bg-purple-500': values.maxPrice && values.minPrice,
+                      'bg-gray-300': !(values.maxPrice && values.minPrice >= 0),
+                      'bg-purple-500': values.maxPrice && values.minPrice >= 0,
                     })}
                   />
                 </button>
