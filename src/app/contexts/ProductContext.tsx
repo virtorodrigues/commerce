@@ -16,7 +16,6 @@ interface ProductContextProps {
   handleFilters: ({ type, value, label }: FilterType) => void
   removeFilter: ({ key }: { key: string }) => void
   getListOfProductsName: () => string[] | undefined
-  handleFilterByProductName: ({ productName }: { productName: string }) => void
 }
 
 export const ProductContext = createContext({} as ProductContextProps)
@@ -118,13 +117,6 @@ export function ProductContextProvider({ children }: { children: ReactNode }) {
     return newProducts
   }
 
-  function handleFilterByProductName({ productName }: { productName: string }) {
-    const newProducts =
-      products?.filter((product) => product.name === productName) || null
-
-    setProducts(newProducts)
-  }
-
   function getListOfProductsName() {
     const listOfProductsName = products?.map((product) => product.name) || []
     const uniqueArray = listOfProductsName.filter((value, index, self) => {
@@ -164,7 +156,6 @@ export function ProductContextProvider({ children }: { children: ReactNode }) {
         handleFilters,
         removeFilter,
         getListOfProductsName,
-        handleFilterByProductName,
       }}
     >
       {children}

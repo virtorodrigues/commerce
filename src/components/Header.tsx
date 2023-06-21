@@ -4,7 +4,7 @@ import Image from 'next/image'
 import logo from '../assets/logo.png'
 import Link from 'next/link'
 
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { ProductContext } from '@/app/contexts/ProductContext'
@@ -49,12 +49,22 @@ const DropdownMenuDemo = () => {
 }
 
 export function Header() {
-  const [search, setSearch] = useState('')
   const { getListOfProductsName, handleFilters } = useContext(ProductContext)
+  const [search, setSearch] = useState('')
+  const [productFiltred, setProductFiltred] = useState(
+    [] as string[] | undefined,
+  )
+  const getProductFiltredName = useCallback(
+    () =>
+      getListOfProductsName()?.filter((product) => {
+        return product.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+      }) || undefined,
+    [search, getListOfProductsName],
+  )
 
-  const productFiltred = getListOfProductsName()?.filter((product) => {
-    return product.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-  })
+  useEffect(() => {
+    setProductFiltred(getProductFiltredName())
+  }, [getProductFiltredName])
 
   return (
     <div className="fixed top-0 z-[99] h-24 w-full bg-purple-500">
