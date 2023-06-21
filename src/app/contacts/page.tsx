@@ -1,15 +1,14 @@
-import { Header } from '@/components/Header'
 import Image from 'next/image'
 import whatsappIcon from '../../assets/social-media/whatsapp-icon.png'
 import instagramIcon from '../../assets/social-media/instagram-icon.png'
 import facebookIcon from '../../assets/social-media/facebook-icon.png'
 import Link from 'next/link'
+import { Layout } from '@/components/Layout'
 
 export default function Contacts() {
   return (
-    <>
-      <Header />
-      <div className="mt-36 flex flex-col gap-2">
+    <Layout>
+      <div className="mt-32 flex flex-col gap-2">
         <Link
           target="_blank"
           rel="noreferrer"
@@ -67,6 +66,6 @@ export default function Contacts() {
           </div>
         </Link>
       </div>
-    </>
+    </Layout>
   )
 }
