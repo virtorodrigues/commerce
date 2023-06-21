@@ -10,7 +10,6 @@ const roboto = Roboto({
 export const metadata = {
   title: 'Marcelo Controles',
   description: 'Compre seu controle favorito e cote seu serviço.',
-  googleSiteVerification: 'SgV4WTl0rnQYXDwTO4a3bi3XrwuR9kxWbYY9zxJMC4M',
   openGraph: {
     title: 'Marcelo Controles',
     description: 'Compre seu controle favorito e cote seu serviço.',
