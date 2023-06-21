@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { Header } from './Header'
-import { ProductContextProvider } from '@/app/contexts/ProductContext'
+import { ProductContextProvider } from '@/contexts/ProductContext'
 
 export function Layout({ children }: { children: ReactNode }) {
   return (

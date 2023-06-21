@@ -7,7 +7,7 @@ import Link from 'next/link'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
-import { ProductContext } from '@/app/contexts/ProductContext'
+import { ProductContext } from '@/contexts/ProductContext'
 
 const DropdownMenuDemo = () => {
   return (

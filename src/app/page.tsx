@@ -3,7 +3,7 @@ import { Layout } from '@/components/Layout'
 import { Hero } from '@/components/Hero'
 
 export const metadata = {
-  title: 'Lista de produtos',
+  title: 'Marcelo Controles',
   description: 'Encontre o controle ideal para você aqui.',
 }
 

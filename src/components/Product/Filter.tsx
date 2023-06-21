@@ -4,7 +4,7 @@ import { Formik } from 'formik'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import clsx from 'clsx'
 import { useContext } from 'react'
-import { ProductContext } from '@/app/contexts/ProductContext'
+import { ProductContext } from '@/contexts/ProductContext'
 
 export function Filter({ productCounter }: { productCounter: number }) {
   const { handleFilters, filters, removeFilter } = useContext(ProductContext)

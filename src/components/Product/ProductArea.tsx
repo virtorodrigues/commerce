@@ -9,7 +9,7 @@ import {
   MixerHorizontalIcon,
   LightningBoltIcon,
 } from '@radix-ui/react-icons'
-import { ProductContext } from '@/app/contexts/ProductContext'
+import { ProductContext } from '@/contexts/ProductContext'
 
 const DropdownMenuDemo = ({ children }: { children: ReactNode }) => {
   return (
