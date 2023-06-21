@@ -11,7 +11,7 @@ import { Layout } from '@/components/Layout'
 import { Product } from '@/types/product.types'
 
 export const metadata = {
-  title: 'Lista de produtos',
+  title: 'Detalhes do produto',
   description: 'Encontre o controle ideal para você aqui.',
 }
 

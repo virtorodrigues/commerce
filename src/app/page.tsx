@@ -1,5 +1,3 @@
-'use client'
-
 import { ProductArea } from '@/components/Product/ProductArea'
 import { Layout } from '@/components/Layout'
 import { Hero } from '@/components/Hero'
