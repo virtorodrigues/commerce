@@ -2,7 +2,6 @@ import { Product } from '@/types/product.types'
 import Image from 'next/image'
 import Link from 'next/link'
 
-
 export function ListOfProducts({ products }: { products: Product[] }) {
   return (
     <ul className="auto-rows grid w-full grid-cols-2 gap-2 md:grid-cols-3 md:gap-5">
