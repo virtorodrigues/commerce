@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://marcelocontroles.vercel.app
+
+# Sitemaps
+Sitemap: https://marcelocontroles.vercel.app/sitemap.xml
