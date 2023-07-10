@@ -66,6 +66,11 @@ export default async function ProductDetails({
   // const product = await getProduct({ id: productId[0] })
   const { product } = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL_BASE}api/product/list?id=${productId[0]}`,
+    {
+      next: {
+        revalidate: 20,
+      },
+    },
   ).then((response) => response.json())
 
   return (

@@ -32,9 +32,9 @@ export function ProductContextProvider({ children }: { children: ReactNode }) {
       const apiUrl = `${process.env.NEXT_PUBLIC_API_URL_BASE}api/product/list`
 
       const result = await fetch(apiUrl, {
-        cache: 'force-cache',
+        cache: 'default',
         next: {
-          revalidate: 60,
+          revalidate: 10,
         },
       }).then(async (response) => {
         const data = await response.json()
